@@ -38,13 +38,16 @@ class InicioSesionAdminState(rx.State):
             
             sistemas = respuesta.get("sistemas", [])
 
+            acceso_concedido = False
             for i in sistemas:
-                if i["sistema"] == constantes.SISTEMA:
-                    self.rol = i["rol"]
-                    self.nombre = i["nombre_personal"]
+                if i.get("sistema") == constantes.SISTEMA:
+                    self.rol = i.get("rol", "")
+                    self.nombre = i.get("nombre_personal", "")
+                    acceso_concedido = True
                     break
-                else:
-                    return rx.toast.error("Acceso denegado: No cuenta con permisos para este sistema")
+
+            if not acceso_concedido:
+                return rx.toast.error("Acceso denegado: No cuenta con permisos para este sistema")
 
             """SE OBTIENE LOS METADATOS"""
             user_metadata = session.user.user_metadata
@@ -106,5 +109,5 @@ class InicioSesionAdminState(rx.State):
         return self.auth_token != ""
     
     @rx.event
-    def toggle_show(self):
+    def toggle_show(self, _=None):
         self.mostrar_password = not self.mostrar_password

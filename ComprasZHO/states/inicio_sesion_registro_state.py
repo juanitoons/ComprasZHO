@@ -38,9 +38,10 @@ class InicioSesionRegistroState(rx.State):
             self.nombre = empleado["nombre"]
             self.empleado_id = empleado["id"]
             
-            sistemas = respuesta["sistemas"]
+            sistemas = respuesta.get("sistemas", [])
+            sistemas_nombres = [s.get("sistema") for s in sistemas if isinstance(s, dict)]
 
-            if not constantes.SISTEMA in sistemas:
+            if constantes.SISTEMA not in sistemas_nombres:
                 return rx.toast.error("Acceso denegado")
             return [
                 rx.toast.success("Bienvenido"),
@@ -84,5 +85,5 @@ class InicioSesionRegistroState(rx.State):
         return self.auth_token != ""
     
     @rx.event
-    def toggle_show(self):
+    def toggle_show(self, _=None):
         self.mostrar_password = not self.mostrar_password

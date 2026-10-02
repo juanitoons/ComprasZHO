@@ -18,10 +18,8 @@ def formulario() -> rx.Component:
                         rx.text("Contraseña"),
                         rx.input(
                             placeholder="Contraseña",
-                            auto_complete=False,
                             name="password",
                             type=rx.cond(CambioPassword.mostrar_password, "text", "password"),
-                            min_length=8,
                             width="100%", 
                             size="3"
                         ),
@@ -33,10 +31,8 @@ def formulario() -> rx.Component:
                         rx.text("Confirmar Contraseña"),
                         rx.input(
                             placeholder="Confirmar Contraseña",
-                            auto_complete=False,
                             name="confirmacion",
                             type=rx.cond(CambioPassword.mostrar_password, "text", "password"),
-                            min_length=8,
                             width="100%", 
                             size="3"
                         ),
