@@ -82,16 +82,22 @@ def contenedor_protegido(
     """
     Wrapper de UI para envolver vistas que requieran autenticación y roles específicos.
     Muestra advertencia o redirige en caso de no contar con acceso.
+    El contenido se ajusta a toda la ventana (100vw x 100vh).
     """
-    return rx.cond(
-        AuthState.is_logged_in,
-        contenido,
-        rx.flex(
-            rx.spinner(size="3"),
-            on_mount=AuthState.verificar_sesion_protegida(roles_requeridos),
-            width="100%",
-            min_height="100vh",
-            justify="center",
-            align="center"
-        )
+    return rx.box(
+        rx.cond(
+            AuthState.is_logged_in,
+            contenido,
+            rx.flex(
+                rx.spinner(size="3"),
+                on_mount=AuthState.verificar_sesion_protegida(roles_requeridos),
+                width="100%",
+                height="100%",
+                justify="center",
+                align="center"
+            )
+        ),
+        width="100vw",
+        min_height="100vh",
+        overflow_x="hidden",
     )

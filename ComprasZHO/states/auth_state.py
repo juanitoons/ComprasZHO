@@ -63,7 +63,7 @@ class AuthState(rx.State):
 
     @rx.var
     def puede_ver_solicitudes(self) -> bool:
-        return any(r in self.user_roles for r in ["solicitante", "admin"])
+        return any(r in self.user_roles for r in ["solicitante", "admin", "director"])
 
     @rx.var
     def puede_ver_autorizaciones(self) -> bool:
@@ -71,7 +71,7 @@ class AuthState(rx.State):
 
     @rx.var
     def puede_ver_copy_paste(self) -> bool:
-        return any(r in self.user_roles for r in ["contable", "admin"])
+        return any(r in self.user_roles for r in ["contable", "admin", "director"])
 
     @rx.var
     def puede_ver_admin(self) -> bool:
